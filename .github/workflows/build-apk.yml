@@ -44,10 +44,9 @@ jobs:
         export ANDROID_SDK_ROOT=$PWD/android-sdk
         export ANDROID_HOME=$PWD/android-sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
-        # 确保buildozer能找到build-tools
-        mkdir -p ~/.buildozer/android/platform/android-sdk
-        ln -sf $ANDROID_SDK_ROOT/build-tools ~/.buildozer/android/platform/android-sdk/build-tools
-        ln -sf $ANDROID_SDK_ROOT/platform-tools ~/.buildozer/android/platform/android-sdk/platform-tools
+        # 确保buildozer能找到完整的Android SDK
+        mkdir -p ~/.buildozer/android/platform
+        ln -sf $ANDROID_SDK_ROOT ~/.buildozer/android/platform/android-sdk
         buildozer android debug
     
     - name: Upload APK
