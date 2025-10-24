@@ -44,9 +44,27 @@ jobs:
         export ANDROID_SDK_ROOT=$PWD/android-sdk
         export ANDROID_HOME=$PWD/android-sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
+        
+        # 验证Android SDK结构
+        echo "检查Android SDK结构:"
+        ls -la $ANDROID_SDK_ROOT/
+        echo "检查build-tools:"
+        ls -la $ANDROID_SDK_ROOT/build-tools/ || echo "build-tools目录不存在"
+        
         # 确保buildozer能找到完整的Android SDK
         mkdir -p ~/.buildozer/android/platform
         ln -sf $ANDROID_SDK_ROOT ~/.buildozer/android/platform/android-sdk
+        
+        # 验证符号链接
+        echo "验证buildozer SDK路径:"
+        ls -la ~/.buildozer/android/platform/android-sdk/build-tools/ || echo "buildozer build-tools路径不存在"
+        
+        # 如果build-tools存在，检查aidl工具
+        if [ -d "$ANDROID_SDK_ROOT/build-tools/28.0.3" ]; then
+          echo "检查aidl工具:"
+          ls -la $ANDROID_SDK_ROOT/build-tools/28.0.3/aidl || echo "aidl工具不存在"
+        fi
+        
         buildozer android debug
     
     - name: Upload APK
