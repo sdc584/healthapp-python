@@ -31,7 +31,7 @@ jobs:
         export ANDROID_SDK_ROOT=$PWD/android-sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
         echo "y" | sdkmanager --licenses
-        sdkmanager "platform-tools" "platforms;android-28" "build-tools;28.0.3" "build-tools;27.0.3"
+        sdkmanager "platform-tools" "platforms;android-28" "build-tools;28.0.3" "build-tools;27.0.3" "build-tools;26.0.3" "build-tools;25.0.3"
     
     - name: Build APK
       run: |
