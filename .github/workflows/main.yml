@@ -30,8 +30,8 @@ jobs:
         mv cmdline-tools android-sdk/cmdline-tools/latest
         export ANDROID_SDK_ROOT=$PWD/android-sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
-        yes | sdkmanager --licenses
-        sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
+        echo "y" | sdkmanager --licenses
+        sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
     
     - name: Build APK
       run: |
