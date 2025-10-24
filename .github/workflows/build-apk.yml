@@ -7,65 +7,65 @@ on:
 
 jobs:
   build-apk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '8'
-    
-    - name: Install dependencies
+    - name: Build APK with Docker
       run: |
-        python -m pip install --upgrade pip
-        pip install buildozer cython
-    
-    - name: Install Android SDK
-      run: |
-        wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-        unzip sdk-tools-linux-4333796.zip
-        mkdir -p android-sdk
-        mv tools android-sdk/
-        export ANDROID_SDK_ROOT=$PWD/android-sdk
-        export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
-        yes | sdkmanager --licenses
-        sdkmanager "platform-tools" "platforms;android-28" "build-tools;28.0.3"
-    
-    - name: Build APK
-      run: |
-        export ANDROID_SDK_ROOT=$PWD/android-sdk
-        export ANDROID_HOME=$PWD/android-sdk
-        export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
+        # 创建一个简单的Dockerfile
+        cat > Dockerfile << 'EOF'
+        FROM ubuntu:20.04
         
-        # 验证Android SDK结构
-        echo "检查Android SDK结构:"
-        ls -la $ANDROID_SDK_ROOT/
-        echo "检查build-tools:"
-        ls -la $ANDROID_SDK_ROOT/build-tools/ || echo "build-tools目录不存在"
+        ENV DEBIAN_FRONTEND=noninteractive
+        ENV PYTHONUNBUFFERED=1
         
-        # 确保buildozer能找到完整的Android SDK
-        mkdir -p ~/.buildozer/android/platform
-        ln -sf $ANDROID_SDK_ROOT ~/.buildozer/android/platform/android-sdk
+        # 安装基础依赖
+        RUN apt-get update && apt-get install -y \
+            python3 \
+            python3-pip \
+            python3-dev \
+            build-essential \
+            git \
+            zip \
+            unzip \
+            openjdk-8-jdk \
+            wget \
+            curl \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            zlib1g-dev \
+            libncurses5-dev \
+            libncursesw5-dev \
+            libtinfo5 \
+            cmake \
+            libffi-dev \
+            libssl-dev \
+            && rm -rf /var/lib/apt/lists/*
         
-        # 验证符号链接
-        echo "验证buildozer SDK路径:"
-        ls -la ~/.buildozer/android/platform/android-sdk/build-tools/ || echo "buildozer build-tools路径不存在"
+        # 设置Java环境
+        ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
         
-        # 如果build-tools存在，检查aidl工具
-        if [ -d "$ANDROID_SDK_ROOT/build-tools/28.0.3" ]; then
-          echo "检查aidl工具:"
-          ls -la $ANDROID_SDK_ROOT/build-tools/28.0.3/aidl || echo "aidl工具不存在"
-        fi
+        # 安装Python依赖
+        RUN pip3 install --upgrade pip
+        RUN pip3 install buildozer cython
         
-        buildozer android debug
+        # 设置工作目录
+        WORKDIR /app
+        
+        # 复制应用文件
+        COPY . .
+        
+        # 构建APK
+        RUN buildozer android debug
+        EOF
+        
+        # 构建Docker镜像并运行
+        docker build -t healthapp-builder .
+        docker run --rm -v $PWD/bin:/app/bin healthapp-builder cp -r bin /app/ || true
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
