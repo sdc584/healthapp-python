@@ -36,7 +36,7 @@ jobs:
         mv tools android-sdk/
         export ANDROID_SDK_ROOT=$PWD/android-sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
-        echo "y" | sdkmanager --licenses
+        yes | sdkmanager --licenses
         sdkmanager "platform-tools" "platforms;android-28" "build-tools;28.0.3"
     
     - name: Build APK
