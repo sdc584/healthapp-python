@@ -1,0 +1,37 @@
+name: healthapp-python
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - setuptools
+  - wheel
+  
+  # 核心框架
+  - kivy>=2.1.0
+  
+  # 网络和API
+  - requests=2.31.0
+  - urllib3=2.0.4
+  - certifi=2023.7.22
+  - charset-normalizer=3.2.0
+  - idna=3.4
+  
+  # 图像处理
+  - pillow=10.0.0
+  
+  # 数据处理
+  - python-dateutil=2.8.2
+  - six=1.16.0
+  
+  # 性能监控
+  - psutil=5.9.5
+  
+  # 通过pip安装的包
+  - pip:
+    - kivymd==1.1.1
+    - plyer==2.1.0
+    # Android相关包只在Android平台需要，Windows开发环境跳过
+    # - pyjnius==1.4.2  # Android Java接口
+    # - android==1.0     # Android平台包

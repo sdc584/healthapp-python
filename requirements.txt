@@ -1,0 +1,29 @@
+# Python健康追踪应用依赖包
+
+# 核心框架
+kivy==2.1.0
+kivymd==1.1.1
+
+# Android支持
+plyer==2.1.0
+pyjnius==1.4.2
+android==1.0
+
+# 网络和API
+requests==2.31.0
+urllib3==2.0.4
+
+# 图像处理
+Pillow==10.0.0
+
+# 数据处理
+python-dateutil==2.8.2
+
+# 性能监控
+psutil==5.9.5
+
+# 工具库
+six==1.16.0
+certifi==2023.7.22
+charset-normalizer==3.2.0
+idna==3.4
