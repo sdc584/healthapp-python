@@ -42,7 +42,12 @@ jobs:
     - name: Build APK
       run: |
         export ANDROID_SDK_ROOT=$PWD/android-sdk
-        export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+        export ANDROID_HOME=$PWD/android-sdk
+        export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
+        # 确保buildozer能找到build-tools
+        mkdir -p ~/.buildozer/android/platform/android-sdk
+        ln -sf $ANDROID_SDK_ROOT/build-tools ~/.buildozer/android/platform/android-sdk/build-tools
+        ln -sf $ANDROID_SDK_ROOT/platform-tools ~/.buildozer/android/platform/android-sdk/platform-tools
         buildozer android debug
     
     - name: Upload APK
