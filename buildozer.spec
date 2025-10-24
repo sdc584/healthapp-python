@@ -79,7 +79,7 @@ pip.extra_args = --break-system-packages
 android.logcat_filters = *:S python:D
 
 # (str) Android API to use
-android.api = 30
+android.api = 29
 
 # (str) Minimum API your APK / AAB will support.
 android.minapi = 21
