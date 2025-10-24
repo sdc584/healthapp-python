@@ -46,3 +46,4 @@ def patch_kivy_defaults():
     print("✅ UI组件中文字体补丁已应用")
 
 
+

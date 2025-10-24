@@ -127,3 +127,4 @@ logs/
 # Data files (optional - remove if you want to include data)
 data/
 test_report.json
+

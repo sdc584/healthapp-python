@@ -57,3 +57,4 @@ docker run -v ${PWD}/bin:/app/bin healthapp
 1. 继续在桌面测试Python应用
 2. 完善应用功能
 3. 准备Android构建环境
+

@@ -80,3 +80,4 @@ HealthApp_Python/
 1. 等待Docker Desktop完全启动
 2. 运行 `build_docker.bat` 构建APK
 3. 在Android模拟器中测试APK
+

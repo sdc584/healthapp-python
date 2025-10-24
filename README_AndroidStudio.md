@@ -51,3 +51,4 @@ HealthApp_Python/
 - 确保使用正确的Python解释器（healthapp-python环境）
 - Kivy应用会在桌面运行，不是Android模拟器
 - 如需打包为Android APK，需要使用Buildozer
+

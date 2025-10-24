@@ -71,3 +71,4 @@ cd KivyMD/examples/android_template
 - ✅ Python应用在桌面正常运行
 - ❌ 尚未打包为Android APK
 - 🔄 需要额外步骤才能在模拟器中运行
+
